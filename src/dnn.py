@@ -131,7 +131,7 @@ def train_california_dnn(n_layers: int, n_units_list: List[int], activation_func
 
     # Train model
     callbacks = [keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=patience, verbose=0, mode='min')]
-    validation_data = (california_eval_df.drop([definition.CALIFORNIA_TARGET], california_eval_df[definition.CALIFORNIA_TARGET])
+    validation_data = (california_eval_df.drop([definition.CALIFORNIA_TARGET], axis=1), california_eval_df[definition.CALIFORNIA_TARGET])
     history = model.fit(x=california_train_df.drop([definition.CALIFORNIA_TARGET], axis=1), y=california_train_df[definition.CALIFORNIA_TARGET], epochs=epochs, batch_size=batch_size, callbacks=callbacks, validation_data=validation_data)
 
     evaluation_loss = model.evaluate(x=california_test_df.drop(["target"], axis=1), y=california_test_df["target"])

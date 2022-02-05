@@ -1,9 +1,37 @@
+import os
+import random
+from typing import Optional, Tuple, Union
+
+import numpy as np
 import pandas as pd
 import sklearn
 from sklearn import datasets, model_selection
+import tensorflow as tf
 
 
-def load_california_housing():
+def fix_seed(seed: int=57):
+    """
+    Fix random seed.
+
+    Parameter
+    ---------
+    seed : int
+    """
+    os.environ["PYTHONHASHSEED"] = f"{seed}"
+    np.random.seed(seed)
+    random.seed(seed)
+
+    session_conf = tf.ConfigProto(
+        intra_op_parallelism_threads=1,
+        inter_op_parallelism_threads=1
+    )
+
+    tf.set_random_seed(seed)
+    sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
+    keras.set_session(sess)
+
+
+def load_california_housing() -> pd.DataFrame:
     """
     Load sklearn.dataset.california_housing dataset.
 
@@ -25,7 +53,10 @@ def load_california_housing():
     return california_df
 
 
-def load_splitting_california_dataset(test_size=None, train_size=None, random_state=57, shuffle=True):
+def load_splitting_california_dataset(test_size: Optional[Union[float, int]]=None,
+                                      train_size: Optional[Union[float, int]]=None,
+                                      random_state: Optional[int]=57,
+                                      shuffle: bool=True) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
     Load california dataset splitted into train and test.
 
@@ -49,7 +80,11 @@ def load_splitting_california_dataset(test_size=None, train_size=None, random_st
     return train_df, test_df
 
 
-def load_splitting_california_dataset_with_eval(eval_size=None, test_size=None, train_size=None, random_state=57, shuffle=True):
+def load_splitting_california_dataset_with_eval(eval_size: Optional[Union[float, int]]=None,
+                                                test_size: Optional[Union[float, int]]=None,
+                                                train_size: Optional[Union[float, int]]=None,
+                                                random_state: Optional[int]=57,
+                                                shuffle: bool=True) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """
     Load california dataset splitted into train, eval, and test.
 

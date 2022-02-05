@@ -2,6 +2,7 @@ from typing import List, Optional, Union
 
 from tensorflow import keras
 
+import definition
 import utils
 
 
@@ -128,7 +129,7 @@ def train_california_dnn(n_layers: int, n_units_list: List[int], activation_func
 
     # Train model
     callbacks = [keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=patience, verbose=0, mode='min')]
-    model.fit(x=california_train_df.drop(["target"], axis=1), y=california_train_df["target"], epochs=epochs, batch_size=batch_size, callbacks=callbacks, validation_data=validation_data)
+    model.fit(x=california_train_df.drop([definition.CALIFORNIA_TARGET], axis=1), y=california_train_df[definition.CALIFORNIA_TARGET], epochs=epochs, batch_size=batch_size, callbacks=callbacks, validation_data=validation_data)
 
 
 

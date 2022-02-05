@@ -42,7 +42,7 @@ def load_california_housing() -> pd.DataFrame:
     california_feature_names = california_dataset.feature_names
 
     california_data_df = pd.DataFrame({feature_name: feature for feature_name, feature in zip(california_feature_names, california_data.T)})
-    california_targets_df = pd.DataFrame({CALIFORNIA_TARGET: california_targets})
+    california_targets_df = pd.DataFrame({definition.CALIFORNIA_TARGET: california_targets})
     california_df = pd.concat([california_data_df, california_targets_df], axis=1)
 
     return california_df

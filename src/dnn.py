@@ -118,7 +118,7 @@ def train_california_dnn(n_layers: int, n_units_list: List[int], activation_func
         the training history
     """
     # Load California dataset
-    train_df, eval_df, test_df = load_splitting_california_dataset_with_eval(
+    train_df, eval_df, test_df = utils.load_splitting_california_dataset_with_eval(
         eval_size=eval_size, test_size=test_size, train_size=train_size, random_state=seed, shuffle=shuffle)
 
     # Build the model

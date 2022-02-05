@@ -20,15 +20,7 @@ def fix_seed(seed: int=57):
     os.environ["PYTHONHASHSEED"] = f"{seed}"
     np.random.seed(seed)
     random.seed(seed)
-
-    session_conf = tf.ConfigProto(
-        intra_op_parallelism_threads=1,
-        inter_op_parallelism_threads=1
-    )
-
-    tf.set_random_seed(seed)
-    sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
-    keras.set_session(sess)
+    tf.random.set_seed(seed)
 
 
 def load_california_housing() -> pd.DataFrame:

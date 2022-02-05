@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from tensorflow import keras
 
@@ -10,7 +10,7 @@ CALIFORNIA_INPUT_DIM = 8
 
 def get_dnn(n_layers: int, n_units_list: List[int], activation_function_list: List[str], input_dim: int, seed: Optional[int]=57):
     """
-    Get DNN whose the number of layers is n_layers, and
+    Get a DNN whose the number of layers is n_layers, and
     each layer has some units specified by n_units_list and
     an activation function specified by activation_function_list.
 
@@ -62,7 +62,7 @@ def get_dnn(n_layers: int, n_units_list: List[int], activation_function_list: Li
 
 def get_california_dnn(n_layers: int, n_units_list: List[int], activation_function_list: List[str], seed: Optional[int]=57):
     """
-    Get DNN for california housing. See get_dnn function for more information.
+    Get a DNN for california housing. See get_dnn function for more information.
 
     Parameters
     ----------
@@ -82,3 +82,53 @@ def get_california_dnn(n_layers: int, n_units_list: List[int], activation_functi
     model = get_dnn(n_layers=n_layers, n_units_list=n_units_list, activation_function_list=activation_function_list, input_dim=CALIFORNIA_INPUT_DIM, seed=seed)
 
     return model
+
+
+def train_california_dnn(n_layers: int, n_units_list: List[int], activation_function_list: List[str], epochs: int, batch_size: int, patience: int=5,
+                         seed: Optional[int]=57, eval_size: Optional[Union[float, int]]=None, test_size: Optional[Union[float, int]]=None,
+                         train_size: Optional[Union[float, int]]=None, shuffle: bool=True):
+    """
+    Train a DNN for california housing, whose the structure is specified by arguments.
+
+    Parameters
+    ----------
+    n_layers : int
+        the number of layers
+    n_units_list : List[int]
+        the numbers of units of each layer
+    activation_function_list : List[str]
+        the list of activation functions of each layer
+    epochs : int
+    batch_size : int
+    patience : int
+        number of epochs with no improvement after which training will be stopped
+    seed : Optional[int]
+    eval_size : float or int, default None
+    test_size : float or int, default None
+    train_size: float or int, degault None
+    random_state : int, default 57
+    shuffle : bool, default True
+
+    Return
+    ------
+    model : keras.engine.sequential.Sequential
+        the dnn for california houseing, whose the structure is specified by arguments
+    """
+    # Load California dataset
+    train_df, eval_df, test_df = load_splitting_california_dataset_with_eval(
+        eval_size=eval_size, test_size=test_size, train_size=train_size, random_state=seed, shuffle=shuffle)
+
+    # Build the model
+    model = get_california_dnn(n_layers=n_layers, n_units_list=n_units_list, activation_function_list=activation_function_list, seed=seed)
+
+    # Compile the model with Adam optimizer and mean squared error
+    optimizer = keras.optimizers.Adam(learning_rate=0.001)
+    loss = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
+    model.compile(loss=loss, optimizer=optimizer)
+
+    # Train model
+    callbacks = [keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=patience, verbose=0, mode='min')]
+    model.fit(x=california_train_df.drop(["target"], axis=1), y=california_train_df["target"], epochs=epochs, batch_size=batch_size, callbacks=callbacks, validation_data=validation_data)
+
+
+

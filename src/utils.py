@@ -57,7 +57,7 @@ def load_splitting_california_dataset(test_size: Optional[Union[float, int]]=Non
     ----------
     test_size : float or int, default None
         This will be 0.25 if test_size and train_size are None.
-    train_siez: float or int, degault None
+    train_size: float or int, degault None
     random_state : int, default 57
     shuffle : bool, default True
 
@@ -90,7 +90,7 @@ def load_splitting_california_dataset_with_eval(eval_size: Optional[Union[float,
         which is extracted from original dataset with train_size.
     test_size : float or int, default None
         This will be 0.25 if test_size and train_size are None.
-    train_siez: float or int, degault None
+    train_size: float or int, degault None
     random_state : int, default 57
     shuffle : bool, default True
 

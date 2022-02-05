@@ -1,10 +1,14 @@
+from typing import List, Optional
+
 from tensorflow import keras
+
+import utils
 
 
 CALIFORNIA_INPUT_DIM = 8
 
 
-def get_dnn(n_layers: int, n_units_list: list, activation_function_list: list, input_dim: int):
+def get_dnn(n_layers: int, n_units_list: List[int], activation_function_list: List[str], input_dim: int, seed: Optional[int]=57):
     """
     Get DNN whose the number of layers is n_layers, and
     each layer has some units specified by n_units_list and
@@ -14,14 +18,15 @@ def get_dnn(n_layers: int, n_units_list: list, activation_function_list: list, i
     ----------
     n_layers : int
         the number of layers
-    n_units_list : list[int]
+    n_units_list : List[int]
         the numbers of units of each layer
         The length has to be same as n_layers and the length of activation_function_list.
-    activation_function_list : list[str]
+    activation_function_list : List[str]
         the list of activation functions of each layer
         The length has to be same as n_layers and the length of n_units_list.
     input_dim : int
         the dimension of input data
+    seed : Optional[int]
 
     Return
     ------
@@ -34,6 +39,10 @@ def get_dnn(n_layers: int, n_units_list: list, activation_function_list: list, i
     """
     if not n_layers == len(n_units_list) == len(activation_function_list):
         raise ValueError(f"n_layers, the length of n_units_list, and the length of activation_function_list must be same, but n_layers is {n_layers}, the length of n_units_list is {n_units_list}, and the length of activation_function_list is {activation_function_list}.")
+
+    # Fix seed if it's not None
+    if seed is not None:
+        utils.fix_seed(seed)
 
     model = keras.models.Sequential()
     
@@ -51,7 +60,7 @@ def get_dnn(n_layers: int, n_units_list: list, activation_function_list: list, i
     return model
 
 
-def get_california_dnn(n_layers: int, n_units_list: list, activation_function_list: list):
+def get_california_dnn(n_layers: int, n_units_list: List[int], activation_function_list: List[str], seed: Optional[int]=57):
     """
     Get DNN for california housing. See get_dnn function for more information.
 
@@ -59,16 +68,17 @@ def get_california_dnn(n_layers: int, n_units_list: list, activation_function_li
     ----------
     n_layers : int
         the number of layers
-    n_units_list : list[int]
+    n_units_list : List[int]
         the numbers of units of each layer
-    activation_function_list : list[str]
+    activation_function_list : List[str]
         the list of activation functions of each layer
+    seed : Optional[int]
 
     Return
     ------
     model : keras.engine.sequential.Sequential
         the dnn for california houseing, whose the structure is specified by arguments
     """
-    model = get_dnn(n_layers=n_layers, n_units_list=n_units_list, activation_function_list=activation_function_list, input_dim=CALIFORNIA_INPUT_DIM)
+    model = get_dnn(n_layers=n_layers, n_units_list=n_units_list, activation_function_list=activation_function_list, input_dim=CALIFORNIA_INPUT_DIM, seed=seed)
 
     return model

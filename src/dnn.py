@@ -4,7 +4,7 @@ from tensorflow import keras
 CALIFORNIA_INPUT_DIM = 8
 
 
-def get_dnn(n_layers: int, n_units_list: list[int], activation_function_list: list[str], input_dim: int) -> keras.engine.sequential.Sequential:
+def get_dnn(n_layers: int, n_units_list: list, activation_function_list: list, input_dim: int):
     """
     Get DNN whose the number of layers is n_layers, and
     each layer has some units specified by n_units_list and
@@ -38,20 +38,20 @@ def get_dnn(n_layers: int, n_units_list: list[int], activation_function_list: li
     model = keras.models.Sequential()
     
     # Add an input layer
-    model.add(keras.layers.Dense(units_list[0], input_dim=input_dim, activation=activate_functions[0]))
+    model.add(keras.layers.Dense(n_units_list[0], input_dim=input_dim, activation=activation_function_list[0]))
     n_layers -= 1
 
     # Add hidden layers
     for index in range(n_layers - 1):
-        model.add(keras.layers.Dense(units_list[index+1], activation=activate_functions[index]))
+        model.add(keras.layers.Dense(n_units_list[index+1], activation=activation_function_list[index]))
 
     # Add an output layer
-    model.add(keras.layers.Dense(units_list[-1]))
+    model.add(keras.layers.Dense(n_units_list[-1], activation=activation_function_list[-1]))
 
     return model
 
 
-def get_california_dnn(n_layers: int, units_list: list[int], activate_functions: list[str]) -> keras.engine.sequential.Sequential:
+def get_california_dnn(n_layers: int, n_units_list: list, activation_function_list: list):
     """
     Get DNN for california housing. See get_dnn function for more information.
 
@@ -69,6 +69,6 @@ def get_california_dnn(n_layers: int, units_list: list[int], activate_functions:
     model : keras.engine.sequential.Sequential
         the dnn for california houseing, whose the structure is specified by arguments
     """
-    model = get_dnn(n_layers=n_layers, units_list=units_list, activate_functions=activate_functions, input_dim=CALIFORNIA_INPUT_DIM)
+    model = get_dnn(n_layers=n_layers, n_units_list=n_units_list, activation_function_list=activation_function_list, input_dim=CALIFORNIA_INPUT_DIM)
 
     return model

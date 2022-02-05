@@ -114,6 +114,8 @@ def train_california_dnn(n_layers: int, n_units_list: List[int], activation_func
     ------
     model : keras.engine.sequential.Sequential
         the dnn for california houseing, whose the structure is specified by arguments
+    history : keras.callbacks.History
+        the training history
     """
     # Load California dataset
     train_df, eval_df, test_df = load_splitting_california_dataset_with_eval(
@@ -129,7 +131,6 @@ def train_california_dnn(n_layers: int, n_units_list: List[int], activation_func
 
     # Train model
     callbacks = [keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=patience, verbose=0, mode='min')]
-    model.fit(x=california_train_df.drop([definition.CALIFORNIA_TARGET], axis=1), y=california_train_df[definition.CALIFORNIA_TARGET], epochs=epochs, batch_size=batch_size, callbacks=callbacks, validation_data=validation_data)
+    history = model.fit(x=california_train_df.drop([definition.CALIFORNIA_TARGET], axis=1), y=california_train_df[definition.CALIFORNIA_TARGET], epochs=epochs, batch_size=batch_size, callbacks=callbacks, validation_data=validation_data)
 
-
-
+    return model, history

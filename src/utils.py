@@ -12,6 +12,7 @@ import tensorflow as tf
 def fix_seed(seed: int=57):
     """
     Fix random seed.
+    (Ref.: https://qiita.com/bee2/items/08eab7a899c9ff56eb35)
 
     Parameter
     ---------

@@ -168,12 +168,10 @@ def train_california_dnn_with_mlflow(config_yaml_path: str):
     dnn_train_parameters = config["dnn_train"]
     
     mlflow.set_experiment(config_mlflow["experiment_name"])
-    mlflow.start_run(run_name=config_mlflow["run_name"])
-    mlflow.keras.autolog()
-    mlflow.log_artifact(config_yaml_path)
+    with mlflow.start_run(run_name=config_mlflow["run_name"]) as run:
+        mlflow.keras.autolog()
+        mlflow.log_artifact(config_yaml_path)
 
-    model, history = train_california_dnn(**dnn_parameters, **dnn_train_parameters, **config_dataset)
-
-    mlflow.end_run()
+        model, history = train_california_dnn(**dnn_parameters, **dnn_train_parameters, **config_dataset)
 
     return model, history

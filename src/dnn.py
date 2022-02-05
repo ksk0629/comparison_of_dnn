@@ -1,5 +1,6 @@
 from typing import List, Optional, Union
 
+import mlflow
 from tensorflow import keras
 
 import definition
@@ -137,5 +138,41 @@ def train_california_dnn(n_layers: int, n_units_list: List[int], activation_func
 
     evaluation_loss = model.evaluate(x=california_test_df.drop(["target"], axis=1), y=california_test_df["target"])
     print(f"Evaluation mean squared error: {evaluation_loss}")
+
+    return model, history
+
+
+def train_california_dnn_with_mlflow(config_yaml_path: str):
+    """
+    Train a DNN for california housing, whose the structure is specified by arguments with mlflow.
+
+    Parameters
+    ----------
+    config_yaml_path : str
+        the config about the model structure, training, and experiment information
+
+    Return
+    ------
+    model : keras.engine.sequential.Sequential
+        the dnn for california houseing, whose the structure is specified by arguments
+    history : keras.callbacks.History
+        the training history
+    """
+    # Load config
+    with open(config_yaml_path, "r") as yaml_f:
+        config = yaml.safe_load(yaml_f)
+    config_mlflow = config["mlflow"]
+    config_dataset = config["dataset"]
+    dnn_parameters = config["dnn"]
+    dnn_train_parameters = config["dnn_train"]
+    
+    mlflow.set_experiment(config_mlflow["experiment_name"])
+    mlflow.start_run(run_name=config_mlflow["run_name"])
+    mlflow.keras.autolog()
+    mlflow.log_artifact(config_yaml_path)
+
+    model, history = train_california_dnn(**dnn_parameters, **dnn_train_parameters, **config_dataset)
+
+    mlflow.end_run()
 
     return model, history

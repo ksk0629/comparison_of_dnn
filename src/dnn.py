@@ -137,7 +137,7 @@ def train_california_dnn(n_layers: int, n_units_list: List[int], activation_func
     history = model.fit(x=california_train_df.drop([definition.CALIFORNIA_TARGET], axis=1), y=california_train_df[definition.CALIFORNIA_TARGET], epochs=epochs, batch_size=batch_size, callbacks=callbacks, validation_data=validation_data)
     print("Finished training.")
 
-    evaluation_loss = model.evaluate(x=california_test_df.drop(["target"], axis=1), y=california_test_df["target"])
+    evaluation_loss = model.evaluate(x=california_test_df.drop([definition.CALIFORNIA_TARGET], axis=1), y=california_test_df[definition.CALIFORNIA_TARGET])
     print(f"Evaluation mean squared error: {evaluation_loss}")
 
     return model, history

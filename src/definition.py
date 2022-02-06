@@ -1,1 +1,1 @@
-CALIFORNIA_TARGET = "target"
+CALIFORNIA_TARGET = "MedHouseVal"

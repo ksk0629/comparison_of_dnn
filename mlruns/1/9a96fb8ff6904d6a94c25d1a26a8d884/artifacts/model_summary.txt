@@ -1,0 +1,23 @@
+Model: "sequential_1"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ dense_7 (Dense)             (None, 24)                216       
+                                                                 
+ dense_8 (Dense)             (None, 24)                600       
+                                                                 
+ dense_9 (Dense)             (None, 24)                600       
+                                                                 
+ dense_10 (Dense)            (None, 24)                600       
+                                                                 
+ dense_11 (Dense)            (None, 24)                600       
+                                                                 
+ dense_12 (Dense)            (None, 24)                600       
+                                                                 
+ dense_13 (Dense)            (None, 1)                 25        
+                                                                 
+=================================================================
+Total params: 3,241
+Trainable params: 3,241
+Non-trainable params: 0
+_________________________________________________________________

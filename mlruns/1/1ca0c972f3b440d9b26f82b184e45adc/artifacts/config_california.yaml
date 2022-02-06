@@ -1,0 +1,23 @@
+mlflow:
+  experiment_name: california
+  run_name: 3 layers
+dataset:
+  eval_size: 0.25
+  test_size: 0.25
+  train_size: 0.75
+  shuffle: True
+dnn:
+  n_layers: 3
+  n_units_list:
+    - 72
+    - 36
+    - 1
+  activation_function_list:
+    - relu
+    - relu
+    - linear
+  seed: 57
+dnn_train:
+  epochs: 100
+  batch_size: 4
+  patience: 5

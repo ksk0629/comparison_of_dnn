@@ -1,0 +1,15 @@
+artifact_uri: file:///content/comparison_of_dnn/mlruns/1/b97b2c9e8f5b45b48cb567ee6d1b34ae/artifacts
+end_time: 1644125578313
+entry_point_name: 'src.dnn.train_california_dnn_with_mlflow'
+experiment_id: '1'
+lifecycle_stage: active
+name: ''
+run_id: b97b2c9e8f5b45b48cb567ee6d1b34ae
+run_uuid: b97b2c9e8f5b45b48cb567ee6d1b34ae
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1644125526298
+status: 3
+tags: []
+user_id: root

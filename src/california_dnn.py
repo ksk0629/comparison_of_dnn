@@ -7,10 +7,7 @@ import pandas as pd
 
 from california_dataset import CaliforniaDataset
 from custom_dnn import CustomDNN
-
-
-CALIFORNIA_INPUT_DIMENSION = 8
-CALIFORNIA_TARGET = "MedHouseVal"
+from definition import CALIFORNIA_INPUT_DIMENSION, CALIFORNIA_TARGET
 
 
 class CaliforniaDNN(CustomDNN):

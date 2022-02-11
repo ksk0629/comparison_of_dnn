@@ -7,10 +7,7 @@ import pandas as pd
 
 from iris_dataset import IrisDataset
 from custom_dnn import CustomDNN
-
-
-IRIS_INPUT_DIMENSION = 4
-IRIS_TARGET = "target"
+from definition import IRIS_TARGET, IRIS_INPUT_DIMENSION
 
 
 class IrisDNN(CustomDNN):

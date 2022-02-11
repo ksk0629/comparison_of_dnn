@@ -3,9 +3,7 @@ import sklearn
 from sklearn import datasets
 
 from custom_dataset import CustomDataset
-
-
-IRIS_STRATIFY = "target"
+from definition import IRIS_TARGET
 
 
 class IrisDataset(CustomDataset):
@@ -25,4 +23,4 @@ class IrisDataset(CustomDataset):
 
     @property
     def stratify(self):
-        return IRIS_STRATIFY
+        return IRIS_TARGET

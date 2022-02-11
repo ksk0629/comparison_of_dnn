@@ -2,6 +2,7 @@ import argparse
 import yaml
 import mlflow
 
+from tensorflow import keras
 import pandas as pd
 
 from iris_dataset import IrisDataset
@@ -26,6 +27,10 @@ class IrisDNN(CustomDNN):
     @property
     def target_name(self) -> str:
         return IRIS_TARGET
+
+    @property
+    def loss(self) -> keras.losses.CategoricalCrossentropy:
+        return tf.keras.losses.CategoricalCrossentropy()
 
     @staticmethod
     def run_all_process_with_mlflow(config_yaml_path: str):

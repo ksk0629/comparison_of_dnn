@@ -30,7 +30,7 @@ class IrisDNN(CustomDNN):
 
     @property
     def loss(self) -> keras.losses.CategoricalCrossentropy:
-        return tf.keras.losses.CategoricalCrossentropy()
+        return keras.losses.CategoricalCrossentropy()
 
     @staticmethod
     def run_all_process_with_mlflow(config_yaml_path: str):

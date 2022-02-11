@@ -1,3 +1,4 @@
+import argparse
 import yaml
 import mlflow
 
@@ -60,3 +61,14 @@ class CaliforniaDNN(CustomDNN):
             california_dnn.train(**dnn_train_parameters, **config_dataset)
 
         return california_dnn
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Build and train california DNN")
+
+    # Add arguments: [https://qiita.com/kzkadc/items/e4fc7bc9c003de1eb6d0]
+    parser.add_argument("config_yaml_path", type=str, default="./config_california.yaml")
+
+    args = parser.parse_args()
+    
+    CaliforniaDNN.run_all_process_with_mlflow(args.config_yaml_path)

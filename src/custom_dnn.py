@@ -96,7 +96,8 @@ class CustomDNN(metaclass=ABCMeta):
         model.add(keras.layers.Dense(n_units_list[-1], activation=activation_function_list[-1]))
 
         self.model = model
-        self.has_build_model = True
+        
+        self.model.summary()
 
     def train(self, epochs: int, batch_size: int, patience: int=5, seed: Optional[int]=57,
               eval_size: Optional[Union[float, int]]=None, test_size: Optional[Union[float, int]]=None,

@@ -136,7 +136,7 @@ class CustomDNN(metaclass=ABCMeta):
         # Train model
         callbacks = [keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=patience, verbose=0, mode='min')]
         validation_data = (eval_dataset.drop([self.target_name], axis=1), eval_dataset[self.target_name])
-        self.history = model.fit(
+        self.history = self.model.fit(
             x=train_dataset.drop([self.target_name], axis=1), y=train_dataset[self.target_name],
             epochs=epochs, batch_size=batch_size, callbacks=callbacks, validation_data=validation_data
             )

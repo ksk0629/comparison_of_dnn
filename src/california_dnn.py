@@ -60,6 +60,8 @@ class CaliforniaDNN(CustomDNN):
             california_dnn.build(**dnn_parameters)
             california_dnn.train(**dnn_train_parameters, **config_dataset)
 
+            mlflow.log_metric("test_loss", california_dnn.test_loss)
+
         return california_dnn
 
 

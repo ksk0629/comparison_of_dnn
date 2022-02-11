@@ -14,7 +14,7 @@ class CustomDataset(metaclass=ABCMeta):
     """Abstract base class for dataset"""
 
     def __init__(self) -> None:
-        pass
+        self.default_eval_size = 0.25
 
     @abstractmethod
     def load_dataset(self):
@@ -62,7 +62,7 @@ class CustomDataset(metaclass=ABCMeta):
 
         return train_dataset, test_dataset
 
-    def load_splitted_dataset_with_eval(eval_size: Optional[Union[float, int]]=None,
+    def load_splitted_dataset_with_eval(self, eval_size: Optional[Union[float, int]]=None,
                                         test_size: Optional[Union[float, int]]=None,
                                         train_size: Optional[Union[float, int]]=None,
                                         random_state: Optional[int]=57,

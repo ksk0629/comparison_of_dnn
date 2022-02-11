@@ -5,9 +5,9 @@ import mlflow
 from tensorflow import keras
 import pandas as pd
 
-from iris_dataset import IrisDataset
 from custom_dnn import CustomDNN
-from definition import IRIS_TARGET, IRIS_INPUT_DIMENSION
+from definition import IRIS_INPUT_DIMENSION, IRIS_TARGET
+from iris_dataset import IrisDataset
 
 
 class IrisDNN(CustomDNN):

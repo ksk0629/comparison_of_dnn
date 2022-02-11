@@ -2,7 +2,7 @@ import pandas as pd
 import sklearn
 from sklearn import datasets
 
-from .custom_dataset import CustomDataset
+from custom_dataset import CustomDataset
 
 class CaliforniaDataset(CustomDataset):
     """Caifornia dataset class"""

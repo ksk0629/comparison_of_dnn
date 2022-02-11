@@ -63,7 +63,7 @@ class CustomDataset(metaclass=ABCMeta):
         """
         dataset = self.load_dataset()
         train_dataset, test_dataset = sklearn.model_selection.train_test_split(
-            dataset, test_size=test_size, train_size=train_size, random_state=random_state, shuffle=shuffle)
+            dataset, test_size=test_size, train_size=train_size, random_state=random_state, shuffle=shuffle, stratify=self.stratify)
 
         return train_dataset, test_dataset
 

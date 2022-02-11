@@ -23,4 +23,4 @@ class IrisDataset(CustomDataset):
 
     @property
     def stratify(self):
-        return IRIS_TARGET
+        return self.load_dataset()[IRIS_TARGET]

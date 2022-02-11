@@ -28,7 +28,7 @@ class CaliforniaDNN(CustomDNN):
         return CALIFORNIA_TARGET
 
     @staticmethod
-    def run_all_process_with_mlflow(config_yaml_path: str) -> CaliforniaDNN:
+    def run_all_process_with_mlflow(config_yaml_path: str):
         """
         Build, train and evaluate the DNN, whose the structure is specified by config file, with mlflow.
 
@@ -67,8 +67,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Build and train california DNN")
 
     # Add arguments: [https://qiita.com/kzkadc/items/e4fc7bc9c003de1eb6d0]
-    parser.add_argument("config_yaml_path", type=str, default="./config_california.yaml")
+    parser.add_argument("-c", "--config_yaml_path", required=False, type=str, default="./config_california.yaml")
 
     args = parser.parse_args()
-    
+
     CaliforniaDNN.run_all_process_with_mlflow(args.config_yaml_path)

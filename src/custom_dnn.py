@@ -29,7 +29,7 @@ class CustomDNN(metaclass=ABCMeta):
 
     @staticmethod
     @abstractmethod
-    def run_all_process_with_mlflow(config_yaml_path: str) -> CustomDNN:
+    def run_all_process_with_mlflow(config_yaml_path: str):
         """
         Build, train and evaluate the DNN, whose the structure is specified by config file, with mlflow.
 
@@ -80,7 +80,7 @@ class CustomDNN(metaclass=ABCMeta):
 
         # Fix seed if it's not None
         if seed is not None:
-            utils.fix_seed(seed)
+            self.dataset.fix_seed(seed)
 
         model = keras.models.Sequential()
         
@@ -141,5 +141,5 @@ class CustomDNN(metaclass=ABCMeta):
             )
         print("Finished training.")
 
-        self.evaluation_loss = model.evaluate(x=test_dataset.drop([self.target_name], axis=1), y=test_dataset[self.target_name])
+        self.evaluation_loss = self.model.evaluate(x=test_dataset.drop([self.target_name], axis=1), y=test_dataset[self.target_name])
         print(f"Evaluation mean squared error: {self.evaluation_loss}")

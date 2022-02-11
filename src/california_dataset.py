@@ -4,6 +4,10 @@ from sklearn import datasets
 
 from custom_dataset import CustomDataset
 
+
+CALIFORNIA_STRATIFY = None
+
+
 class CaliforniaDataset(CustomDataset):
     """Caifornia dataset class"""
 
@@ -18,3 +22,7 @@ class CaliforniaDataset(CustomDataset):
         california_dataset = sklearn.datasets.fetch_california_housing(as_frame=True)["frame"]
 
         return california_dataset
+
+    @property
+    def stratify(self):
+        return CALIFORNIA_STRATIFY

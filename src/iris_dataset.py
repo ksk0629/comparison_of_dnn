@@ -4,6 +4,10 @@ from sklearn import datasets
 
 from custom_dataset import CustomDataset
 
+
+IRIS_STRATIFY = "target"
+
+
 class IrisDataset(CustomDataset):
     """Iris dataset class"""
 
@@ -18,3 +22,7 @@ class IrisDataset(CustomDataset):
         iris_dataset = sklearn.datasets.load_iris(as_frame=True)["frame"]
 
         return iris_dataset
+
+    @property
+    def stratify(self):
+        return IRIS_STRATIFY

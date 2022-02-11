@@ -21,6 +21,11 @@ class CustomDataset(metaclass=ABCMeta):
         """Load dataset."""
         raise NotImplementedError()
 
+    @property
+    @abstractmethod
+    def stratify(self):
+        raise NotImplementedError()
+
     def fix_seed(self, seed: int=57) -> None:
         """
         Fix random seed.

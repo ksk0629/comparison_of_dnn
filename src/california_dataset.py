@@ -1,9 +1,9 @@
 import sklearn
 from sklearn import datasets
 
-import custom_dataset
+from custom_dataset import CustomDataset
 
-class CliforniaDataset(custom_dataset):
+class CaliforniaDataset(CustomDataset):
     """Caifornia dataset class"""
 
     def load_dataset() -> pd.DataFrame:

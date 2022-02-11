@@ -21,7 +21,7 @@ class CustomDataset(metaclass=ABCMeta):
         """Load dataset."""
         raise NotImplementedError()
 
-    def fix_seed(seed: int=57) -> None:
+    def fix_seed(self, seed: int=57) -> None:
         """
         Fix random seed.
         (Ref.: https://qiita.com/bee2/items/08eab7a899c9ff56eb35)

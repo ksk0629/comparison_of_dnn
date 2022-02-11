@@ -3,7 +3,6 @@ import sklearn
 from sklearn import datasets
 
 from custom_dataset import CustomDataset
-from definition import CALIFORNIA_TARGET
 
 
 class CaliforniaDataset(CustomDataset):
@@ -23,4 +22,4 @@ class CaliforniaDataset(CustomDataset):
 
     @property
     def stratify(self):
-        return CALIFORNIA_TARGET
+        return None

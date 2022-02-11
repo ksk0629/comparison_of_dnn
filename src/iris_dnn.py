@@ -26,8 +26,8 @@ class IrisDNN(CustomDNN):
         return IRIS_TARGET
 
     @property
-    def loss(self) -> keras.losses.CategoricalCrossentropy:
-        return keras.losses.CategoricalCrossentropy()
+    def loss(self) -> keras.losses.SparseCategoricalCrossentropy:
+        return keras.losses.SparseCategoricalCrossentropy()
 
     @staticmethod
     def run_all_process_with_mlflow(config_yaml_path: str):

@@ -97,6 +97,7 @@ class CustomDataset(metaclass=ABCMeta):
         train_and_eval_dataset, test_dataset = self.load_splitted_dataset(test_size=test_size, train_size=train_size, random_state=random_state, shuffle=shuffle)
         
         actual_eval_size = self.default_eval_size if eval_size is None else eval_size
-        train_dataset, eval_dataset = sklearn.model_selection.train_test_split(train_and_eval_dataset, test_size=actual_eval_size, train_size=None, random_state=random_state, shuffle=shuffle)
+        train_dataset, eval_dataset = sklearn.model_selection.train_test_split(
+            train_and_eval_dataset, test_size=actual_eval_size, train_size=None, random_state=random_state, shuffle=shuffle, stratify=self.stratify)
 
         return train_dataset, eval_dataset, test_dataset

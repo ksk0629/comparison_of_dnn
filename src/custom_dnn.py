@@ -147,4 +147,4 @@ class CustomDNN(metaclass=ABCMeta):
         print("Finished training.")
 
         self.test_loss = self.model.evaluate(x=test_dataset.drop([self.target_name], axis=1), y=test_dataset[self.target_name])
-        print(f"test mean squared error: {self.test_loss}")
+        print(f"test loss: {self.test_loss}")

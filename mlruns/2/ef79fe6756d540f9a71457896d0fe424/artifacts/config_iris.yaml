@@ -1,0 +1,33 @@
+mlflow:
+  experiment_name: iris
+  run_name: eight layers with 261 parameters
+dataset:
+  eval_size: 0.25
+  test_size: 0.25
+  train_size: 0.75
+  shuffle: True
+dnn:
+  n_layers: 8
+  n_units_list:
+    - 8
+    - 6
+    - 6
+    - 6
+    - 4
+    - 4
+    - 4
+    - 3
+  activation_function_list:
+    - relu
+    - relu
+    - relu
+    - relu
+    - relu
+    - relu
+    - relu
+    - softmax
+  seed: 57
+dnn_train:
+  epochs: 300
+  batch_size: 4
+  patience: 5

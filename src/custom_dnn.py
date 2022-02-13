@@ -27,6 +27,11 @@ class CustomDNN(metaclass=ABCMeta):
     def target_name(self) -> str:
         raise NotImplementedError()
 
+    @property
+    @abstractmethod
+    def loss(self):
+        raise NotImplementedError()
+
     @staticmethod
     @abstractmethod
     def run_all_process_with_mlflow(config_yaml_path: str):
@@ -130,8 +135,7 @@ class CustomDNN(metaclass=ABCMeta):
 
         # Compile the model with Adam optimizer and mean squared error
         optimizer = keras.optimizers.Adam(learning_rate=0.001)
-        loss = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
-        self.model.compile(loss=loss, optimizer=optimizer)
+        self.model.compile(loss=self.loss, optimizer=optimizer)
 
         # Train model
         callbacks = [keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=patience, verbose=0, mode='min')]
@@ -143,4 +147,4 @@ class CustomDNN(metaclass=ABCMeta):
         print("Finished training.")
 
         self.test_loss = self.model.evaluate(x=test_dataset.drop([self.target_name], axis=1), y=test_dataset[self.target_name])
-        print(f"test mean squared error: {self.test_loss}")
+        print(f"test loss: {self.test_loss}")

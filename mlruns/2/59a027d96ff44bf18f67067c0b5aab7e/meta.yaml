@@ -1,0 +1,15 @@
+artifact_uri: file:///content/comparison_of_dnn/mlruns/2/59a027d96ff44bf18f67067c0b5aab7e/artifacts
+end_time: 1644727345202
+entry_point_name: ''
+experiment_id: '2'
+lifecycle_stage: active
+name: ''
+run_id: 59a027d96ff44bf18f67067c0b5aab7e
+run_uuid: 59a027d96ff44bf18f67067c0b5aab7e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1644727331024
+status: 3
+tags: []
+user_id: root

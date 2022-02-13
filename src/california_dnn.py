@@ -2,14 +2,12 @@ import argparse
 import yaml
 import mlflow
 
+from tensorflow import keras
 import pandas as pd
 
 from california_dataset import CaliforniaDataset
 from custom_dnn import CustomDNN
-
-
-CALIFORNIA_INPUT_DIMENSION = 8
-CALIFORNIA_TARGET = "MedHouseVal"
+from definition import CALIFORNIA_INPUT_DIMENSION, CALIFORNIA_TARGET
 
 
 class CaliforniaDNN(CustomDNN):
@@ -26,6 +24,10 @@ class CaliforniaDNN(CustomDNN):
     @property
     def target_name(self) -> str:
         return CALIFORNIA_TARGET
+
+    @property
+    def loss(self) -> keras.losses.MeanSquaredError:
+        return keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
 
     @staticmethod
     def run_all_process_with_mlflow(config_yaml_path: str):

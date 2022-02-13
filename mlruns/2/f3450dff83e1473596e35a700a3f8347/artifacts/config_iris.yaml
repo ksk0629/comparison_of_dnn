@@ -1,6 +1,6 @@
 mlflow:
   experiment_name: iris
-  run_name: four layers with 260 units
+  run_name: four layers with 260 parameters
 dataset:
   eval_size: 0.25
   test_size: 0.25

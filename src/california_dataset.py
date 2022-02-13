@@ -23,3 +23,7 @@ class CaliforniaDataset(CustomDataset):
     @property
     def stratify(self):
         return None
+
+    @property
+    def target_name(self):
+        return None

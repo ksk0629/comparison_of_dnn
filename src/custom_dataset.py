@@ -26,6 +26,11 @@ class CustomDataset(metaclass=ABCMeta):
     def stratify(self):
         raise NotImplementedError()
 
+    @property
+    @abstractmethod
+    def target_namt(self):
+        raise NotImplementedError()
+
     def fix_seed(self, seed: int=57) -> None:
         """
         Fix random seed.
@@ -95,9 +100,11 @@ class CustomDataset(metaclass=ABCMeta):
         test_dataset : pandas.DataFrame
         """
         train_and_eval_dataset, test_dataset = self.load_splitted_dataset(test_size=test_size, train_size=train_size, random_state=random_state, shuffle=shuffle)
+
+        stratify = None if self.stratify is None else train_and_eval_dataset[self.target_name]
         
         actual_eval_size = self.default_eval_size if eval_size is None else eval_size
         train_dataset, eval_dataset = sklearn.model_selection.train_test_split(
-            train_and_eval_dataset, test_size=actual_eval_size, train_size=None, random_state=random_state, shuffle=shuffle, stratify=self.stratify)
+            train_and_eval_dataset, test_size=actual_eval_size, train_size=None, random_state=random_state, shuffle=shuffle, stratify=stratify)
 
         return train_dataset, eval_dataset, test_dataset

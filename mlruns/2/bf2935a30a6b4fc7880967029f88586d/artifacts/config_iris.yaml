@@ -1,0 +1,21 @@
+mlflow:
+  experiment_name: iris
+  run_name: two layers with 35 units
+dataset:
+  eval_size: 0.25
+  test_size: 0.25
+  train_size: 0.75
+  shuffle: True
+dnn:
+  n_layers: 2
+  n_units_list:
+    - 4
+    - 3
+  activation_function_list:
+    - relu
+    - softmax
+  seed: 57
+dnn_train:
+  epochs: 1000
+  batch_size: 4
+  patience: 5

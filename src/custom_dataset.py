@@ -28,7 +28,7 @@ class CustomDataset(metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def target_namt(self):
+    def target_name(self):
         raise NotImplementedError()
 
     def fix_seed(self, seed: int=57) -> None:

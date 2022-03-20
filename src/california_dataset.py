@@ -9,21 +9,18 @@ class CaliforniaDataset(CustomDataset):
     """Caifornia dataset class"""
 
     def load_dataset(self) -> pd.DataFrame:
-        """
-        Load california housing dataset using sklearn.datasets.fetch_california_housing() function.
+        """Load california housing dataset using sklearn.datasets.fetch_california_housing() function.
 
-        Return
-        ------
-        california_dataset : pandas.DataFrame
+        :return pandas.DataFrame: California dataset
         """
         california_dataset = sklearn.datasets.fetch_california_housing(as_frame=True)["frame"]
 
         return california_dataset
 
     @property
-    def stratify(self):
+    def stratify(self) -> None:
         return None
 
     @property
-    def target_name(self):
+    def target_name(self) -> None:
         return None

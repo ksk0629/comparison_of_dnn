@@ -65,7 +65,7 @@ class IrisDNN(CustomDNN):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Build and train iris DNN")
+    parser = argparse.ArgumentParser(description="Train and evaluate iris DNN")
 
     parser.add_argument("-c", "--config_yaml_path", required=False, type=str, default="./config_iris.yaml")
     args = parser.parse_args()

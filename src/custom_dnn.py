@@ -10,7 +10,7 @@ class CustomDNN(metaclass=ABCMeta):
     """Abstract base class for creating DNN"""
 
     def __init__(self):
-        pass
+        self.__model = None
 
     @property
     @abstractmethod
@@ -34,98 +34,87 @@ class CustomDNN(metaclass=ABCMeta):
 
     @staticmethod
     @abstractmethod
-    def run_all_process_with_mlflow(config_yaml_path: str):
-        """
-        Build, train and evaluate the DNN, whose the structure is specified by config file, with mlflow.
+    def run_all_process_with_mlflow(config_yaml_path: str) -> object:
+        """Build, train and evaluate a DNN, whose the structure is specified by config file, with mlflow.
 
-        Parameters
-        ----------
-        config_yaml_path : str
-            the config about the model structure, training, and experiment information
-
-        Return
-        ------
-        custom_dnn : CustomDNN
-            trained CustomDNN
+        :param str config_yaml_path: the config about the model structure, training, and experiment information
+        :return object: trained CustomDNN
         """
         raise NotImplementedError()
 
     @property
+    def model(self) -> Optional[keras.models.Sequential]:
+        """
+        :return Optional[keras.model.Sequential]: model object
+        """
+        return self.__model
+
+    @property
     def has_built_model(self) -> bool:
-        try:
-            self.model
-            return True
-        except AttributeError:
+        """
+        :return bool: whether a model has already built or not
+        """
+        if self.model is None:
             return False
+        else:
+            return True
 
     def build(self, n_layers: int, n_units_list: List[int], activation_function_list: List[str], seed: Optional[int]=57) -> None:
-        """
-        Build a DNN whose the number of layers is n_layers, and
-        each layer has some units specified by n_units_list and
-        an activation function specified by activation_function_list.
+        """Build a DNN whose number of layers is n_layers, and each layer has some units specified by n_units_list and each
+        activation function specified by activation_function_list.
 
-        Parameters
-        ----------
-        n_layers : int
-            the number of layers
-        n_units_list : List[int]
-            the numbers of units of each layer
-            The length has to be same as n_layers and the length of activation_function_list.
-        activation_function_list : List[str]
-            the list of activation functions of each layer
-            The length has to be same as n_layers and the length of n_units_list.
-        seed : Optional[int]
-
-        Raise
-        -----
-        ValueError: if n_layers, the length of n_units_list, and the length of activation_function_list are not same
+        :param int n_layers: the number of layers
+        :param List[int] n_units_list: the numbers of units of each layer (The length has to be same as n_layers and the length of activation_function_list.)
+        :param List[str] activation_function_list: the list of activation functions of each layer (The length has to be same as n_layers and the length of n_units_list.)
+        :param Optional[int] seed: random seed (Random seed will not be fixed if this is None.), defaults to 57
+        :raises ValueError: if n_layers, the length of n_units_list, and the length of activation_function_list are not same
         """
+        # Check arguments validation
         if not n_layers == len(n_units_list) == len(activation_function_list):
-            raise ValueError(f"n_layers, the length of n_units_list, and the length of activation_function_list must be same, but n_layers is {n_layers}, the length of n_units_list is {n_units_list}, and the length of activation_function_list is {activation_function_list}.")
+            msg_1 = f"n_layers, the length of n_units_list, and the length of activation_function_list must be same."
+            msg_2 = f"n_layers is {n_layers},the length of n_units_list is {n_units_list}, and the length of activation_function_list is {activation_function_list}."
+            msg = msg_1 + msg_2
+            raise ValueError(msg)
 
         # Fix seed if it's not None
         if seed is not None:
             self.dataset.fix_seed(seed)
 
+        # Create a model
         model = keras.models.Sequential()
         
-        # Add an input layer
+        # Add an input layer to the model
         model.add(keras.layers.Dense(n_units_list[0], input_dim=self.input_dimension, activation=activation_function_list[0]))
         n_layers -= 1
 
-        # Add hidden layers
+        # Add hidden layers to the model
         for index in range(n_layers - 1):
-            model.add(keras.layers.Dense(n_units_list[index+1], activation=activation_function_list[index]))
+            model.add(keras.layers.Dense(n_units_list[index+1], activation=activation_function_list[index+1]))
 
-        # Add an output layer
+        # Add an output layer to the model
         model.add(keras.layers.Dense(n_units_list[-1], activation=activation_function_list[-1]))
 
-        self.model = model
+        # Store the model
+        self.__model = model
         
         self.model.summary()
 
     def train(self, epochs: int, batch_size: int, patience: int=5, seed: Optional[int]=57,
               eval_size: Optional[Union[float, int]]=None, test_size: Optional[Union[float, int]]=None,
-              train_size: Optional[Union[float, int]]=None, shuffle: bool=True):
-        """
-        Train and evaluate the DNN.
+              train_size: Optional[Union[float, int]]=None, shuffle: bool=True) -> None:
+        """Train and evaluate the DNN.
 
-        Parameters
-        ----------
-        epochs : int
-        batch_size : int
-        patience : int
-            number of epochs with no improvement after which training will be stopped
-        seed : Optional[int]
-        eval_size : float or int, default None
-        test_size : float or int, default None
-        train_size: float or int, degault None
-        shuffle : bool, default True
-
-        Raise
-        -----
-        AttributeError : if there is no model
+        :param int epochs: the number of epochs
+        :param int batch_size: the training batch size
+        :param int patience: the number of epochs with no improvement after which training will be stopped, defaults to 5
+        :param Optional[int] seed: random seed, defaults to 57
+        :param Optional[Union[float, int]] eval_size: the ecaluating dataset size, defaults to None
+        :param Optional[Union[float, int]] test_size: the testing dataset size, defaults to None
+        :param Optional[Union[float, int]] train_size: the training dataset size, defaults to None
+        :param bool shuffle: whether the dataset shuffles or not, defaults to True
+        :raises AttributeError: if there is no model
         """
+        # Check the exsitence of the model
         if not self.has_built_model:
             raise AttributeError("There is no model.")
 

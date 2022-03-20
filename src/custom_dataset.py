@@ -18,7 +18,6 @@ class CustomDataset(metaclass=ABCMeta):
 
     @abstractmethod
     def load_dataset(self):
-        """Load dataset."""
         raise NotImplementedError()
 
     @property
@@ -32,13 +31,9 @@ class CustomDataset(metaclass=ABCMeta):
         raise NotImplementedError()
 
     def fix_seed(self, seed: int=57) -> None:
-        """
-        Fix random seed.
-        (Ref.: https://qiita.com/bee2/items/08eab7a899c9ff56eb35)
+        """Fix random seed. (Ref.: https://qiita.com/bee2/items/08eab7a899c9ff56eb35)
 
-        Parameter
-        ---------
-        seed : int, default 57
+        :param int seed: random seed, defaults to 57
         """
         os.environ["PYTHONHASHSEED"] = f"{seed}"
         np.random.seed(seed)
@@ -50,21 +45,14 @@ class CustomDataset(metaclass=ABCMeta):
                               train_size: Optional[Union[float, int]]=None,
                               random_state: Optional[int]=57,
                               shuffle: bool=True) -> Tuple[pd.DataFrame, pd.DataFrame]:
-        """
-        Load dataset splitted into train and test.
+        """Load datasets splitted into train and test.
+        See https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html to know more about parameters.
 
-        Parameters (See https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html)
-        ----------
-        test_size : float or int, default None
-            This will be 0.25 if test_size and train_size are None.
-        train_size: float or int, degault None
-        random_state : int, default 57
-        shuffle : bool, default True
-
-        Returns
-        -------
-        train_dataset : pandas.DataFrame
-        test_dataset : pandas.DataFrame
+        :param Optional[Union[float, int]] test_size: the test dataset size (This will be 0.25 if test_size and train_size are None.), defaults to None
+        :param Optional[Union[float, int]] train_size: the training dataset size, defaults to None
+        :param Optional[int] random_state: random seed, defaults to 57
+        :param bool shuffle: whether the dataset shuffles or not, defaults to True
+        :return Tuple[pandas.DataFrame, pandas.DataFrame]: datasets for training and testing
         """
         dataset = self.load_dataset()
         train_dataset, test_dataset = sklearn.model_selection.train_test_split(
@@ -77,27 +65,15 @@ class CustomDataset(metaclass=ABCMeta):
                                         train_size: Optional[Union[float, int]]=None,
                                         random_state: Optional[int]=57,
                                         shuffle: bool=True) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-        """
-        Load dataset splitted into train, eval, and test.
+        """Load datasets splitted into train, eval, and test.
+        See https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html to know more about parameters.
 
-        Parameters (See https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html)
-        ----------
-        eval_size : float or int, default None
-            This will be self.default_eval_size if eval_size is None.
-            Note that, eval_size is size of evaluation dataset.
-            The dataset is extracted from train dataset,
-            which is extracted from original dataset with train_size.
-        test_size : float or int, default None
-            This will be 0.25 if test_size and train_size are None.
-        train_size: float or int, degault None
-        random_state : int, default 57
-        shuffle : bool, default True
-
-        Returns
-        -------
-        train_dataset : pandas.DataFrame
-        eval_dataset : pandas.DataFrame
-        test_dataset : pandas.DataFrame
+        :param Optional[Union[float, int]] eval_size: the evaluating dataset size (This will be self.default_eval_size if eval_size is None.), defaults to None
+        :param Optional[Union[float, int]] test_size: the test dataset size (This will be 0.25 if test_size and train_size are None.), defaults to None
+        :param Optional[Union[float, int]] train_size: the training dataset size, defaults to None
+        :param Optional[int] random_state: random seed, defaults to 57
+        :param bool shuffle: whther the dataset shuffles or not, defaults to True
+        :return Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]: datasets for training, evaluating, and testing
         """
         train_and_eval_dataset, test_dataset = self.load_splitted_dataset(test_size=test_size, train_size=train_size, random_state=random_state, shuffle=shuffle)
 

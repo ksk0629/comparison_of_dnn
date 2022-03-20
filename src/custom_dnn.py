@@ -43,7 +43,7 @@ class CustomDNN(metaclass=ABCMeta):
         raise NotImplementedError()
 
     @property
-    def model(self) -> Optional[keras.model.Sequential]:
+    def model(self) -> Optional[keras.models.Sequential]:
         """
         :return Optional[keras.model.Sequential]: model object
         """

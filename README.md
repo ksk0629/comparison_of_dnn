@@ -4,8 +4,8 @@ This repository is for getting better understainding of DNN. For now, I explored
 ## Experiment results
 Please see the following articles on Dev.to.
 
-[[Toward understanding DNN (deep neural network) well: California housing dataset](https://dev.to/ksk0629/toward-understanding-dnn-deep-neural-network-well-california-housing-dataset-3jp3)]
-[[Toward understanding DNN (deep neural network) well: iris dataset](https://dev.to/ksk0629/toward-understanding-dnn-deep-neural-network-well-iris-dataset-5179)]
+- [[Toward understanding DNN (deep neural network) well: California housing dataset](https://dev.to/ksk0629/toward-understanding-dnn-deep-neural-network-well-california-housing-dataset-3jp3)]
+- [[Toward understanding DNN (deep neural network) well: iris dataset](https://dev.to/ksk0629/toward-understanding-dnn-deep-neural-network-well-iris-dataset-5179)]
 
 I would appreciate it if someone shares tips or ccomments in the discussion box or this repository issues.
 

@@ -1,7 +1,7 @@
 # comparison_of_dnn
 This repository is for getting better understainding of DNN. For now, I explored about DNN on california dataset and iris dataset. I'll explore it more with other dataset.
 
-# Experiment results
+## Experiment results
 Please see the following articles on Dev.to.
 
 [[Toward understanding DNN (deep neural network) well: California housing dataset](https://dev.to/ksk0629/toward-understanding-dnn-deep-neural-network-well-california-housing-dataset-3jp3)]
@@ -9,7 +9,7 @@ Please see the following articles on Dev.to.
 
 I would appreciate it if someone shares tips or ccomments in the discussion box or this repository issues.
 
-# Quickstart
+## Quickstart
 ### Preparation
 1. Creating accounts
 
